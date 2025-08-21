@@ -28,7 +28,7 @@ const Upload = () => {
     file: File;
   }) => {
     setIsProcessing(true);
-    setStatusText("Uploading the file");
+    setStatusText("Uploading the file...");
     const uploadedFile = await fs.upload([file]);
 
     if (!uploadedFile) return setStatusText("Failed to Upload File");
@@ -37,7 +37,7 @@ const Upload = () => {
     const imageFile = await convertPdfToImage(file);
     if (!imageFile.file)
       return setStatusText("Error:Failed to convert PDF to Image");
-    setStatusText("Uplaoding the Image");
+    setStatusText("Uplaoding the Image...");
 
     const uplaodedImage = await fs.upload([imageFile.file]);
     if (!uplaodedImage) return setStatusText("Error: Failed to Uplaod Image");
@@ -68,6 +68,7 @@ const Upload = () => {
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setStatusText("Analysis Complete, redirecting...");
     console.log(data);
+    navigate(`/resume/${uuid}`);
   };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
